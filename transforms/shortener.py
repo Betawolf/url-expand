@@ -26,9 +26,8 @@ class URLShortener(URLTransform):
     self.access_token = ret
     super().__init__()
 
-  @staticmethod
-  def shorten(url,domain='bit.ly'):
-    params = {'access_token':access_token,
+  def shorten(self,url,domain='bit.ly'):
+    params = {'access_token':self.access_token,
               'domain':domain,
               'format':'json',
               'longUrl':url} 
@@ -52,4 +51,4 @@ class URLShortener(URLTransform):
     return True
 
   def inner_transform(self,url):
-    return URLShortener.shorten(url) 
+    return self.shorten(url) 

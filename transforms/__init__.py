@@ -1,5 +1,6 @@
 import re
 import os
+import time
 import inspect
 
 url_regex = re.compile("https?://[^ \n\r\t]+")
@@ -32,19 +33,22 @@ class URLTransform:
   def __init__(self):
     self.url_map = {}
 
-  def transform_in_place(self,text):
+
+  def transform_in_place(self,text,rush=False):
     """ Given an input text, return a version of the text with
     the URLs replaced with their transformed versions.
     
     :param str text: A piece of text containing URLs to be expanded.
     :param list shorteners: A list of usable ShortenerService objects.
+    :param Boolean rush: Set to true to disregard inbuilt rate limits.
     :return: The modified string. """
     urls = extract_urls(text)
-    for url in urls:
-      sub = self.transform(url)
+    subs = transform_all(urls,rush)
+    for url, sub in zip(urls,subs):
       if sub:
         text = text.replace(url,sub)
     return text
+
 
   def transform(self,url):
     """ Applies a transform to the URL specified.
@@ -61,6 +65,22 @@ class URLTransform:
       if url not in self.url_map:
         self.url_map[url] = None
     return self.url_map[url]
+
+
+  def transform_all(self, urls, rush=False):
+    """ Applies a transform to all of the listed
+    URLs which are supported, returning a list of the results.
+    Uses inbuilt rate limiting by default.
+
+    :param list urls: A list of URL strings to be potentially
+    :param Boolean rush: Set to true to disregard inbuilt rate limits.
+    :return: A list corresponding to the input, of either URL strings or Nones.
+    """
+    returnlist = []
+    for url in urls:
+      returnlist.append(self.transform(url))
+      time.sleep(self.delay)
+    return returnlist
 
 
   def supports(self, url):
