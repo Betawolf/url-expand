@@ -43,7 +43,7 @@ class URLTransform:
     :param Boolean rush: Set to true to disregard inbuilt rate limits.
     :return: The modified string. """
     urls = extract_urls(text)
-    subs = transform_all(urls,rush)
+    subs = self.transform_all(urls,rush)
     for url, sub in zip(urls,subs):
       if sub:
         text = text.replace(url,sub)
