@@ -43,7 +43,7 @@ def expand_url(url, useragent=None, options=[]):
 class URLExpander(URLTransform):
 
   application_name = 'url-expander'
-  version = 0.1
+  version = 0.2
   keyword = 'expand'
   delay = 1
 

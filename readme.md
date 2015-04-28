@@ -35,7 +35,8 @@ e.transform_in_place("I just went to http://bit.ly/1RmnUT.")
 #'I just went to http://google.com.'
 ```
 
-Currently there are two transforms:
+Currently there are three transforms:
 
 + `expander` uses [LongURL](http://longurl.org/) to expand a shortened URL to its original. 
 + `shorten` uses [bit.ly](http://dev.bitly.com/) to shorten a URL. (Requires passing API auth information)
++ `title` replaces a URL with the title of the corresponding webpage (if available). (Currently in an uncertain state, will at best work for shortened URLs).
