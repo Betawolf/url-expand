@@ -50,7 +50,7 @@ class URLTransform:
     return text
 
 
-  def transform(self,url):
+  def transform(self,url,clean=True):
     """ Applies a transform to the URL specified.
     Acts as a caching wrapper to inner_transform,
     which is the method which should normally be
@@ -63,11 +63,14 @@ class URLTransform:
       if self.supports(url):
           self.url_map[url] = self.inner_transform(url)
       if url not in self.url_map:
-        self.url_map[url] = None
+        if clean:
+          self.url_map[url] = None
+        else:
+          self.url_map[url] = url
     return self.url_map[url]
 
 
-  def transform_all(self, urls, rush=False):
+  def transform_all(self, urls, rush=False, clean=True):
     """ Applies a transform to all of the listed
     URLs which are supported, returning a list of the results.
     Uses inbuilt rate limiting by default.
@@ -78,7 +81,7 @@ class URLTransform:
     """
     returnlist = []
     for url in urls:
-      returnlist.append(self.transform(url))
+      returnlist.append(self.transform(url,clean=clean))
       time.sleep(self.delay)
     return returnlist
 
