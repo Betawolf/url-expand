@@ -1,6 +1,6 @@
 import json 
 import base64
-from transforms import URLTransform
+from urlmorph import URLTransform
 from urllib.parse import urlencode
 from urllib.request import urlopen,Request
 

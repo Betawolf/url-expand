@@ -1,7 +1,7 @@
 import json
 import time
 import logging
-from transforms import URLTransform
+from urlmorph import URLTransform
 from urllib.request import urlopen,Request
 from urllib.parse import urlencode,urlparse
 

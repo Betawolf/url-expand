@@ -1,4 +1,4 @@
-import transforms.expander as expander
+import urlmorph.expander as expander
 
 class URLTitler(expander.URLExpander):
   

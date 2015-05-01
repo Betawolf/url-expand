@@ -11,13 +11,13 @@ def extract_urls(text):
 
 def all_transforms():
   all_s = {}
-  import transforms
-  for pyfile in os.listdir(os.path.dirname(transforms.__file__)):
+  import urlmorph
+  for pyfile in os.listdir(os.path.dirname(urlmorph.__file__)):
     if pyfile.find('.') < 1:
       continue
     bname,ext = pyfile.split('.')
     if ext == 'py' and bname != '__init__':
-      mod = __import__(transforms.__name__+'.'+bname)
+      mod = __import__(urlmorph.__name__+'.'+bname)
       mod = getattr(mod,bname)
       classes = inspect.getmembers(mod,lambda thing : inspect.isclass(thing) and thing != URLTransform and issubclass(thing,URLTransform))
       if classes:

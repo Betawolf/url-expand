@@ -5,12 +5,13 @@
 There is a command-line interface, which supports piping:
 
 ```
-usage: urlmorph.py [-h] [--errors [ERRORS]] transformer [infile] [outfile]
+usage: urlmorph-cli.py [-h] [--errors [ERRORS]] [--args [ARGS [ARGS ...]]]
+                       transformer [infile] [outfile]
 
 Transform URLs in-place.
 
 positional arguments:
-  transformer           The transform to apply, one of: {expand,shorten}
+  transformer           The transform to apply, one of {shorten,expand,title}
   infile                The input file containing text with shortened URLs.
                         Default is STDIN.
   outfile               Writeable output file. Default is STDOUT.
@@ -19,14 +20,15 @@ optional arguments:
   -h, --help            show this help message and exit
   --errors [ERRORS], -e [ERRORS]
                         Logfile for warnings. Default is STDERR.
-
+  --args [ARGS [ARGS ...]], -a [ARGS [ARGS ...]]
+                        Optional arguments to pass to the selected transform.
 ```
 
 There is a programmatic interface:
 
 ```{python}
-import transforms.expander
-e = transforms.expander.URLExpander() 
+import urlmorph.expander
+e = urlmorph.expander.URLExpander() 
 e.transform('http://bit.ly/1RmnUT')
 # 'http://google.com'
 e.transform_all(['http://bit.ly/1RmnUT','http://tinyurl.com/6cfcq3'])
@@ -40,3 +42,12 @@ Currently there are three transforms:
 + `expander` uses [LongURL](http://longurl.org/) to expand a shortened URL to its original. 
 + `shorten` uses [bit.ly](http://dev.bitly.com/) to shorten a URL. (Requires passing API auth information)
 + `title` replaces a URL with the title of the corresponding webpage (if available). (Currently in an uncertain state, will at best work for shortened URLs).
+
+You can install the library by cloning this repository and using `setup.py`.
+
+```
+$ git clone https://github.com/Betawolf/url-morph
+$ cd url-morph/
+$ sudo python setup.py install
+```
+
